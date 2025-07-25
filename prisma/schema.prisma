@@ -1,0 +1,42 @@
+generator client {
+    provider ="prisma-client-js"
+}
+
+datasource db{
+    provider = "postgresql"
+    url      = env("DB_URL")
+}
+
+model User {
+    id       Int    @id @default(autoincrement())
+    email    String @unique
+    password String
+    role     String
+}
+
+model Employee {
+    id           Int    @id @default(autoincrement())
+    name         String  
+    basicSalary  Float
+    hra          Float
+    allowances   Float
+    tax          Float
+    pf           Float
+    netPay       Float
+    createAt     DateTime @default(now())
+}
+
+model Attendance {
+        id           Int    @id @default(autoincrement())
+        employeeId   Int
+        date         DateTime
+        hoursWorked  Float
+}
+
+model Payroll {
+    id           Int    @id @default(autoincrement())
+    employeeId   Int
+    month        String
+    amount       Float
+    generatedAt  DateTime @default(now())
+}
